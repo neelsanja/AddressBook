@@ -1,0 +1,70 @@
+﻿@using System.Data
+@model DataTable
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Country List</h3>
+        </div>
+        <div class="col-md-2">
+            <a asp-controller="LOC_Country" asp-action="Add" class="btn btn-success btn-sm">Add Country</a>
+        </div>
+        <div class="pull-right">
+            <div id="sample_1_filter" class="dataTables_filter">
+                <label>Search Any&nbsp;<input type="text" class="form-control input-sm input-small input-inline" placeholder="" id="sample_1" aria-controls="sample_1" /></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table" id="sample_1">
+    <thead>
+        <tr>
+            @*<th scope="col">CountryID</th>*@
+            <th scope="col">CountryName</th>
+            <th scope="col">CountryCode</th>
+            <th scope="col">CreationDate</th>
+            <th scope="col">Modification</th>
+            <th scope="col" colspan="2" class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody id="sample_2">
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                @*<th scope="row">@dr["CountryID"]</th>*@
+                <td>@dr["CountryName"]</td>
+                <td>@dr["CountryCode"]</td>
+                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy")</td>
+                <td>@Convert.ToDateTime(dr["Modification"]).ToString("dd-MM-yyyy")</td>
+                <td>
+                    <form method="post" asp-controller="LOC_Country" asp-action="Delete">
+                        <input type="hidden" name="CountryID" value="@Convert.ToInt32(dr["CountryID"])" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm ('Are you sure you want to delete : @dr["CountryName"]')">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-controller="LOC_Country" asp-action="Add">
+                        <input type="hidden" name="CountryID" value="@Convert.ToInt32(dr["CountryID"])" />
+                        <button type="submit" class="btn btn-success">Edit</button>
+                    </form>
+                </td>
+            </tr>
+        }
+       
+    </tbody>
+</table>
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

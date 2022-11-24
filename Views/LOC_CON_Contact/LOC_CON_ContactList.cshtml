@@ -1,0 +1,75 @@
+﻿@using System.Data
+@model DataTable
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Contact List</h3>
+        </div>
+        <div class="col-md-2">
+            <a asp-controller="LOC_CON_Contact" asp-action="Add" class="btn btn-success btn-sm">Add Contact</a>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th scope="col">ContactID</th>*@
+            <th scope="col" colspan="2" class="text-center">Action</th>
+            <th scope="col">ContactCategoryName</th>
+            <th scope="col">CountryName</th>
+            <th scope="col">StateName</th>
+            <th scope="col">CityName</th>
+            <th scope="col">ContactName</th>
+            <th scope="col">Address</th>
+            <th scope="col">PinCode</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">AlternetContact</th>
+            <th scope="col">Email</th>
+            <th scope="col">BirthDate</th>
+            <th scope="col">LinkedIn</th>
+            <th scope="col">Twitter</th>
+            <th scope="col">Instagram</th>
+            <th scope="col">CreationDate</th>
+            <th scope="col">Modification</
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                @*<th scope="row">@dr["ContactID"]</th>*@
+                <td>
+                    <form method="post" asp-controller="LOC_CON_Contact" asp-action="Delete">
+                        <input type="hidden" name="ContactID" value="@Convert.ToInt32(dr["ContactID"])" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm ('Are you sure you want to delete : @dr["ContactName"]')">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-controller="LOC_CON_Contact" asp-action="Add">
+                        <input type="hidden" name="ContactID" value="@Convert.ToInt32(dr["ContactID"])" />
+                        <button type="submit" class="btn btn-success">Edit</button>
+                    </form>
+                </td>
+                <td>@dr["ContactCategoryName"]</td>
+                <td>@dr["CountryName"]</td>
+                <td>@dr["StateName"]</td>
+                <td>@dr["CityName"]</td>
+                <td>@dr["ContactName"]</td>
+                <td>@dr["Address"]</td>
+                <td>@dr["PinCode"]</td>
+                <td>@dr["Mobile"]</td>
+                <td>@dr["AlternetContact"]</td>
+                <td>@dr["Email"]</td>
+                <td>@dr["BirthDate"]</td>
+                <td>@dr["LinkedIn"]</td>
+                <td>@dr["Twitter"]</td>
+                <td>@dr["Instagram"]</td>
+                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy")</td>
+                <td>@Convert.ToDateTime(dr["Modification"]).ToString("dd-MM-yyyy")</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

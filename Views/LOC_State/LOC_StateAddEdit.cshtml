@@ -1,0 +1,41 @@
+﻿@model LOC_StateModel
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="LOC_State" asp-action="Save">
+            @Html.HiddenFor(x=>x.StateID)
+            <h3>@TempData["StateInsertMsg"]</h3>
+            <div class="from-group">
+                <label>Country Name</label>
+                <select class="form-control" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.LOC_CountryList,"CountryID","CountryName"))">
+                    <option value="">Select Country</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>State Name</label>
+                <input type="text" class="form-Control" placeholder="Enter State Name" asp-for="StateName" />
+            </div>
+            <div class="form-group">
+                <label>State Code</label>
+                <input type="text" class="form-Control" placeholder="Enter State Code" asp-for="StateCode" />
+            </div>
+            @*<div class="form-group">
+                <label>Country ID</label>
+                <input type="text" class="form-Control" placeholder="Enter Country ID" asp-for="CountryID" />
+            </div>*@
+            <div class="form-group">
+                <label>Creation Date</label>
+                <input type="date" class="form-Control" placeholder="Enter Creation Date" asp-for="CreationDate" />
+            </div>
+            <div class="form-group">
+                <label>Modification Date</label>
+                <input type="date" class="form-Control" placeholder="Enter Modification Date" asp-for="Modification" />
+            </div>
+            </hr>
+            <input type="submit" />
+            <input type="submit" value="Clear" asp-action="Add" />
+            <input type="submit" value="Cancel" asp-action="Index" />
+        </form>
+    </div>
+
+</div>
